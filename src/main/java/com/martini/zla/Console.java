@@ -20,7 +20,13 @@ public class Console {
 
     public static void main(String[] args) throws Exception {
 
-        Configuration conf = Configuration.load();
+        Configuration conf;
+        if(args.length > 0){
+            conf = Configuration.load(args[0]);
+        }else{
+            conf = Configuration.load();
+        }
+
 
         Request req = new Request(conf.login, conf.password, conf.nip, LocalDate.of(2018, 12, 20));
         Response response = new Client().send(req);

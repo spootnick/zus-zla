@@ -12,11 +12,11 @@ public class Configuration {
     public final String password;
     public final String nip;
 
-    private Configuration(){
+    private Configuration(String path){
         Properties props = new Properties();
-        File file = new File(FILE);
+        File file = new File(path);
         if(!file.exists()){
-            throw new RuntimeException(FILE+" not found, must contain: login, password, nip");
+            throw new RuntimeException(path+" not found, must contain: login, password, nip");
         }
         try {
             props.load(new FileInputStream(file));
@@ -29,7 +29,11 @@ public class Configuration {
         nip = props.getProperty("nip");
     }
 
+    public static Configuration load(String path){
+        return new Configuration(path);
+    }
+
     public static Configuration load(){
-        return new Configuration();
+        return load(FILE);
     }
 }
